@@ -2,42 +2,44 @@ version: "3.8"
 
 services:
   hadoop-master:
-    image: kancve/hadoop
+    image: kancve/hadoop:3.2.2-ubuntu-16.04
     hostname: hadoop-master
     volumes:
       - ./volumes/hadoop:/volumes/hadoop
-      - ./volumes/entrypoint.sh:/volumes/entrypoint.sh
-    entrypoint: /volumes/entrypoint.sh master
+    entrypoint: /volumes/hadoop/entrypoint.sh master
     deploy:
       endpoint_mode: dnsrr
 
   hadoop-worker1:
-    image: kancve/hadoop
+    image: kancve/hadoop:3.2.2-ubuntu-16.04
     hostname: hadoop-worker1
     volumes:
       - ./volumes/hadoop:/volumes/hadoop
-      - ./volumes/entrypoint.sh:/volumes/entrypoint.sh
-    entrypoint: /volumes/entrypoint.sh worker
+    entrypoint: /volumes/hadoop/entrypoint.sh worker
+    depends_on:
+      - hadoop-master
     deploy:
       endpoint_mode: dnsrr
 
   hadoop-worker2:
-    image: kancve/hadoop
+    image: kancve/hadoop:3.2.2-ubuntu-16.04
     hostname: hadoop-worker2
     volumes:
       - ./volumes/hadoop:/volumes/hadoop
-      - ./volumes/entrypoint.sh:/volumes/entrypoint.sh
-    entrypoint: /volumes/entrypoint.sh worker
+    entrypoint: /volumes/hadoop/entrypoint.sh worker
+    depends_on:
+      - hadoop-master
     deploy:
       endpoint_mode: dnsrr
 
   hadoop-worker3:
-    image: kancve/hadoop
+    image: kancve/hadoop:3.2.2-ubuntu-16.04
     hostname: hadoop-worker3
     volumes:
       - ./volumes/hadoop:/volumes/hadoop
-      - ./volumes/entrypoint.sh:/volumes/entrypoint.sh
-    entrypoint: /volumes/entrypoint.sh worker
+    entrypoint: /volumes/hadoop/entrypoint.sh worker
+    depends_on:
+      - hadoop-master
     deploy:
       endpoint_mode: dnsrr
 
