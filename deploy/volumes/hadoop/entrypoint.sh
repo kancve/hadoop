@@ -15,9 +15,10 @@ if [ "$1" = "master" ]; then
   mapred historyserver &
   exec yarn resourcemanager
 elif [ "$1" = "worker" ]; then
-  ${SCRIPT_DIR}/wait-for-it.sh -t 0 hadoop-master:9820 -- \
+  ${SCRIPT_DIR}/wait-for-it.sh hadoop-master:9820 -t 0 -- \
   hdfs datanode &
-  exec yarn nodemanager
+  ${SCRIPT_DIR}/wait-for-it.sh hadoop-master:8031 -t 0 -- \
+  yarn nodemanager
 else
   echo "Do not add to cluster."
 fi
