@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  portainer:
+    image: portainer/portainer:1.24.1
+    hostname: portainer
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  nginx:
+    image: nginx:1.21.0-alpine
+    hostname: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./volumes/nginx/conf.d:/etc/nginx/conf.d
